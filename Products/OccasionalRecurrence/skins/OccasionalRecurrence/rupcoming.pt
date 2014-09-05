@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:content-core fill-slot="content-core">
+    <metal:content-core define-macro="content-core">
+
+        <div class="revents"
+             tal:define="view context/@@rcalendar_view;
+                         results view/getNextMonthEvents;
+                         events_link string:rcalendar;
+                         global lastdate nothing;
+                         toLocalizedTime nocall: context/@@plone/toLocalizedTime;"
+             tal:condition="results">
+
+            <tal:events tal:repeat="obj results">
+              <tal:block tal:define="oddrow repeat/obj/odd;
+                          date python:obj[0];
+                          start python:obj[1];
+                          event python:obj[2];
+                          cdate python:'%s, %s'%(date.Day(),toLocalizedTime(date).replace(' 0',' '))">
+                <tal:block1 tal:condition="python:lastdate!=cdate">
+                  <h2 tal:define="global lastdate cdate" tal:content="cdate">Date</h2>
+                </tal:block1>
+                <div>
+                    <h3 tal:content="start">
+                      Time
+                    </h3>
+                    <h4>
+                      <a href="#"
+                         class="tile"
+                         tal:attributes="href event/getURL"
+                         title="Event Details">
+                          <span tal:replace="event/Title">
+                           Some Event 
+                          </span>
+                          <span condition="event/location | nothing">
+                              &#151;
+                              <tal:location content="event/location">Location</tal:location>
+                          </span>
+                        </a>
+                    </h4>
+                    <div class="description"
+                         tal:condition="event/Description"
+                         tal:content="event/Description">
+                      description
+                    </div>
+                </div>
+              </tal:block>
+            </tal:events>
+
+        </div>
+
+
+    </metal:content-core>
+</metal:content-core>
+
+</body>
+</html>

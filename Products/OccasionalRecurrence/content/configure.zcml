@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="Products.OccasionalRecurrence">
+
+    <include package="archetypes.schemaextender" />
+
+    <adapter factory=".eventextender.EventExtender"
+             provides="archetypes.schemaextender.interfaces.IOrderableSchemaExtender"
+    />
+
+    <adapter factory=".eventextender.EventFiddler" />
+
+</configure>

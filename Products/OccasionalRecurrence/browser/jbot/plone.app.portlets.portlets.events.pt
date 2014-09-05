@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      tal:omit-tag="">
+
+<dl class="portlet portletEvents revents"
+    tal:define="rview context/@@rcalendar_view;
+                results python:rview.getNextMonthEvents()[0:view.available];
+                events_link string:${here/@@plone_portal_state/navigation_root_url}/events;
+                global lastdate nothing;
+                toLocalizedTime nocall: context/@@plone/toLocalizedTime"
+    i18n:domain="plone">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <a href=""
+           tal:attributes="href events_link"
+           class="tile"
+           i18n:translate="box_events">
+            Upcoming Events
+        </a>
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <dd class="portletItem">
+        <tal:events tal:repeat="obj results">
+          <tal:block tal:define="oddrow repeat/obj/odd;
+                      date python:obj[0];
+                      start python:obj[1];
+                      event python:obj[2];
+                      cdate python:'%s, %s'%(date.Day(),toLocalizedTime(date).replace(' 0',' '))">
+                <tal:block tal:condition="python:lastdate!=cdate">
+                  <h4 tal:define="global lastdate cdate" tal:content="cdate">Date</h4>
+                </tal:block>
+                <h5 tal:content="start">
+                  Time
+                </h5>
+                <div>
+                    <a href="#"
+                       class="tile"
+                       tal:attributes="href event/getURL;
+                                       title event/Description">
+                        <span tal:replace="event/Title">
+                         Some Event
+                        </span>
+                        <span class="portletItemDetails">
+                            <tal:condition condition="event/location | nothing">
+                                <tal:location content="event/location">Location</tal:location>, <br />
+                            </tal:condition>
+                        </span>
+                    </a>
+                </div>
+          </tal:block>
+        </tal:events>
+    </dd>
+
+    <dd class="portletFooter">
+        <a href=""
+           class="tile"
+           tal:attributes="href events_link"
+           i18n:translate="box_upcoming_events">
+                Upcoming events&hellip;
+        </a>
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+</dl>
+
+</html>

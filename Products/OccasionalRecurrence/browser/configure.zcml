@@ -1,0 +1,51 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="Products.OccasionalRecurrence">
+
+  <include package="z3c.jbot" file="meta.zcml" />
+
+  <browser:jbot
+    directory="jbot"
+    layer="..interfaces.IProductsOccasionalRecurrenceLayer"
+  />
+
+  <browser:page
+      for="*"
+      name="rcalendar_view"
+      class=".rcalendar.RCalendar"
+      permission="zope.Public"
+      allowed_interface="..interfaces.IRCalendarView"
+      layer="..interfaces.IProductsOccasionalRecurrenceLayer"
+  />
+
+  <browser:page
+      for="*"
+      name="rcalendar"
+      class=".rcalendar.RCalendar"
+      permission="zope.Public"
+      template="rcalendar.pt"
+      layer="..interfaces.IProductsOccasionalRecurrenceLayer"
+  />
+
+  <browser:page
+      for="*"
+      name="revent_view"
+      class=".revent.REvent"
+      permission="zope.Public"
+      layer="..interfaces.IProductsOccasionalRecurrenceLayer"
+  />
+
+    <!-- Example of browser component with IProductsOccasionalrecurrenceLayer layer attribute -->
+    <!--
+    <browser:page
+        name="my-view"
+        for="*"
+        permission="zope.Public"
+        template="my-view.pt"
+        layer="..interfaces.IProductsOccasionalRecurrenceLayer"
+    />
+    -->
+
+
+</configure>

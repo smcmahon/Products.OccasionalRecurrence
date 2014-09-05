@@ -1,0 +1,29 @@
+/*
+  <dtml-with base_properties> (do not remove this)
+  <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either)
+*/
+table.rCalendar td.dayevent,
+table.rCalendar td.todayevent,
+table.rCalendar td.daynoevent,
+table.rCalendar td.todaynoevent {
+  background-color: &dtml-oddRowBackgroundColor;;
+  border: 1px solid &dtml-globalBorderColor;;
+  vertical-align: top;
+  font-weight: bold;
+}
+table.rCalendar td.todayevent,
+table.rCalendar td.todaynoevent {
+  background-color: &dtml-evenRowBackgroundColor;;
+}
+
+table.rCalendar div.event {
+  font-size: &dtml-fontSmallSize;;
+  background-color: transparent;
+  text-align: left;
+  margin-bottom: 2px;
+}
+.rCalendar .event_title {
+  font-weight: normal;
+}
+
+/* </dtml-with> */
