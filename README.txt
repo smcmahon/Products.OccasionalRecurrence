@@ -1,17 +1,9 @@
-.. contents::
+Minimal intervention recurring events for Plone.
 
-.. Note!
-   -----
-   Update the following URLs to point to your:
+Extends the Archetypes event type to add a recurs field.
 
-   - code repository
-   - bug tracker
-   - questions/comments feedback mail
-   (do not set a real mail, to avoid spams)
+Replaces the events portlet to work with recurrence.
 
-   Or remove it if not used.
+Adds a @@rcalendar view with a grid display of events.
 
-- Code repository: http://svn.somewhere.com/...
-- Questions and comments to somemailing_list
-- Report bugs at http://bug.somewhere.com/..
-
+Requires: you must add a "recurs" metadata field and recatalog any existing events.
