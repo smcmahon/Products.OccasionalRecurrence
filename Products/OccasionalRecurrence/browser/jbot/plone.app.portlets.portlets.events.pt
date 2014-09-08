@@ -45,7 +45,7 @@
                         </span>
                         <span class="portletItemDetails">
                             <tal:condition condition="event/location | nothing">
-                                <tal:location content="event/location">Location</tal:location>, <br />
+                                <tal:location content="event/location">Location</tal:location>
                             </tal:condition>
                         </span>
                     </a>
