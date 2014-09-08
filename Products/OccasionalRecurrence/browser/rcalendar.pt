@@ -135,7 +135,7 @@
         </dl>
 
 
-        <div>XXX
+        <div>
           <span tal:repeat="sub context/Subject" tal:content="sub" />
         </div>
 
