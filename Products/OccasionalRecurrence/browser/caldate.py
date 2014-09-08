@@ -165,7 +165,8 @@ def startOfNextMonth(adate):
 
 def endOfMonth(adate):
     days_in_month = calendar.monthrange(adate.year(), adate.month())[1]
-    return adate.replace(day=days_in_month)
+    parts = adate.parts()
+    return DateTime(parts[0], parts[1], days_in_month)
 
 
 def monthly(start, end, target):
