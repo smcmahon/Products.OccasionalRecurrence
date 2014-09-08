@@ -94,7 +94,7 @@
                                             ><td class="event"
                                                 tal:condition="day_event"
                                                 tal:attributes="class python:is_today and 'todayevent' or 'event'"
-                                               ><strong><a href=""
+                                               ><strong class="daynum"><a href=""
                                                    tal:attributes="href string:${navigation_root_url}/search?${view/getReviewStateString}start.query:record:list:date=${day/date_string}+23%3A59%3A59&amp;start.range:record=max&amp;end.query:record:list:date=${day/date_string}+00%3A00%3A00&amp;end.range:record=min;
                                                                    title day/eventstring;"
                                                    tal:content="daynumber">
@@ -102,7 +102,7 @@
                                                </a
                                             ></strong>
 
-                                            <div tal:repeat="event day/eventslist" tal:attributes="class event/exclasses">
+                                            <div tal:repeat="event day/eventslist" tal:attributes="class string:${event/exclasses} event-item">
                                                 <a href="#" tal:attributes="href event/url; title event/desc">
                                                     <span class="stime" tal:content="event/start">Start Time</span>
                                                     <span tal:content="event/title">Title</span>
@@ -113,10 +113,10 @@
                                             </td
                                             ><tal:notdayevent tal:condition="not: day_event"
                                                 ><td tal:condition="python:is_today"
-                                                     class="todaynoevent"><strong
+                                                     class="todaynoevent"><strong class="daynum"
                                                      tal:content="daynumber">31</strong></td
                                                 ><td tal:condition="python:not is_today"
-                                                     tal:content="daynumber">31</td
+                                                     tal:content="daynumber"><strong class="daynum">31</strong></td
                                             ></tal:notdayevent
                                         ></tal:block
                                     ></tal:isday
