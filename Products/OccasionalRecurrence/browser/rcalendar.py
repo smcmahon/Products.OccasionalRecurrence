@@ -187,13 +187,19 @@ class RCalendar(BrowserView):
                 day['is_today'] = self.isToday(daynumber)
                 if day['event']:
                     cur_date = DateTime(year, month, daynumber)
-                    localized_date = [self._ts.ulocalized_time(cur_date, context=context, request=self.request)]
+                    localized_date = [
+                        self._ts.ulocalized_time(
+                            cur_date,
+                            context=context,
+                            request=self.request).replace(' 0', ' ')
+                        ]
                     for e in day['eventslist']:
                         e['start'] = _toampm(e['start'])
                         e['end'] = _toampm(e['end'])
                     day['eventstring'] = '\n'.join(
                             localized_date + [' %s' % self.getEventString(e) for e in day['eventslist']]
                             )
+                    day['ldate'] = cur_date.strftime('%a, %b ')
                     day['date_string'] = '%s-%s-%s' % (year, month, daynumber)
 
         return weeks

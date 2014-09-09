@@ -25,5 +25,7 @@ table.rCalendar div.event {
 .rCalendar .event_title {
   font-weight: normal;
 }
-
+.mobile-only {
+    display: none;
+}
 /* </dtml-with> */

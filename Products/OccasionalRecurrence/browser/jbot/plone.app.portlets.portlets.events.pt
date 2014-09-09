@@ -30,7 +30,7 @@
                       event python:obj[2];
                       cdate python:'%s, %s'%(date.Day(),toLocalizedTime(date).replace(' 0',' '))">
                 <tal:block tal:condition="python:lastdate!=cdate">
-                  <h5 tal:define="global lastdate cdate" tal:content="cdate">Date</h5>
+                  <h4 tal:define="global lastdate cdate" tal:content="cdate">Date</h4>
                 </tal:block>
                 <h5 tal:content="start">
                   Time

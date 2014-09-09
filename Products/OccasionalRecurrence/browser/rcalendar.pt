@@ -96,10 +96,11 @@
                                                 tal:attributes="class python:is_today and 'todayevent' or 'event'"
                                                ><strong class="daynum"><a href=""
                                                    tal:attributes="href string:${navigation_root_url}/search?${view/getReviewStateString}start.query:record:list:date=${day/date_string}+23%3A59%3A59&amp;start.range:record=max&amp;end.query:record:list:date=${day/date_string}+00%3A00%3A00&amp;end.range:record=min;
-                                                                   title day/eventstring;"
-                                                   tal:content="daynumber">
+                                                   title day/eventstring;"
+                                                   >
+                                                   <span class="mobile-only" tal:content="day/ldate" /><span tal:content="daynumber">
                                                    31
-                                               </a
+                                                   </span></a
                                             ></strong>
 
                                             <div tal:repeat="event day/eventslist" tal:attributes="class string:${event/exclasses} event-item">
