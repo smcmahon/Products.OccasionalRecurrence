@@ -121,25 +121,31 @@ class RCalendar(BrowserView):
             else:
                 includedevents.append(result.getRID())
 
+            result_end = result.end
+            result_start = result.start
+            if getattr(result_end, 'parts', None) is None:
+                result_end = DateTime(result_end)
+                result_start = DateTime(result_start)
+
             # we need to deal with events that end after this month
-            if (result.end.year(), result.end.month()) != (year, month):
+            if (result_end.year(), result_end.month()) != (year, month):
                 eventEndDay = last_day
                 eventEndDate = last_date
             else:
-                eventEndDay = result.end.day()
-                eventEndDate = result.end
+                eventEndDay = result_end.day()
+                eventEndDate = result_end
 
             # and events that started last month
-            if (result.start.year(), result.start.month()) != (year, month):
+            if (result_start.year(), result_start.month()) != (year, month):
                 eventStartDay = 1
                 eventStartDate = first_date
             else:
-                eventStartDay = result.start.day()
-                eventStartDate = result.start
+                eventStartDay = result_start.day()
+                eventStartDate = result_start
 
             # and recurrence
-            recurs = result.recurs
-            start = result.start.earliestTime()
+            recurs = getattr(result, 'recurs', 'daily')
+            start = result_start.earliestTime()
             if recurs == 'weekly':
                 dates = caldate.weekly(eventStartDate, eventEndDate, start)
                 allEventDays = [e.day() for e in dates]
@@ -153,16 +159,22 @@ class RCalendar(BrowserView):
                 allEventDays = range(eventStartDay, eventEndDay + 1)
 
             # construct subject class selectors
-            exclasses = ' '.join(["subject-%s" % url_quote_plus(s).replace('+', '-') for s in result.Subject])
+            event_subject = list(result.Subject)
+            event_type = getattr(result, 'event_type', 'Other')
+            if event_type != 'Other':
+                event_subject.append(event_type)
+            exclasses = ' '.join(["subject-%s" % url_quote_plus(s).replace('+', '-') for s in event_subject])
+            exstyle = ' '.join(event_subject)
 
             # construct dictionary to return for event
-            st = result.start.AMPMMinutes().lstrip('0')
+            st = result_start.AMPMMinutes().lstrip('0')
             event = {'end': None,
                      'start': st,
                      'title': result.Title or result.getId,
                      'desc': result.Description,
                      'url': result.getURL(),
                      'exclasses': exclasses,
+                     'exstyle': exstyle,
                     }
 
             # put event in list

@@ -42,7 +42,7 @@ class EventExtender(object):
             )),
             widget=atapi.SelectionWidget(
                 label=_(u"Occurs"),
-                description=_(u"Frequency of Occurence"),
+                description=_(u"Frequency of Occurrence"),
             ),
             required=True,
             default='daily',

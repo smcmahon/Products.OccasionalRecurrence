@@ -30,6 +30,15 @@
 
   <browser:page
       for="*"
+      name="cpma_rcalendar"
+      class=".rcalendar.RCalendar"
+      permission="zope.Public"
+      template="cpma_rcalendar.pt"
+      layer="..interfaces.IProductsOccasionalRecurrenceLayer"
+  />
+
+  <browser:page
+      for="*"
       name="revent_view"
       class=".revent.REvent"
       permission="zope.Public"
