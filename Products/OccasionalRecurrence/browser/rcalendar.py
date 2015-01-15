@@ -7,6 +7,7 @@ Created by Stephen McMahon on 2009-04-15.
 """
 
 from time import localtime
+import calendar
 import caldate
 
 from DateTime import DateTime
@@ -278,6 +279,24 @@ class RCalendar(BrowserView):
         else:
             month += 1
         return (year, month)
+
+    def getYearMonths(self):
+        months = calendar.month_name
+        base_url = self.context.absolute_url()
+        mlist = [{
+            'name': self.year - 1,
+            'url': "%s?month:int=%s&year:int=%s" % (base_url, self.month, self.year - 1)
+        }]
+        for i in range(1, 13):
+            mlist.append({
+                'name': months[i],
+                'url': "%s?month:int=%s&year:int=%s" % (base_url, i, self.year)
+                })
+        mlist.append({
+            'name': self.year + 1,
+            'url': "%s?month:int=%s&year:int=%s" % (base_url, self.month, self.year + 1)
+            })
+        return mlist
 
     def getWeekdays(self):
         """Returns a list of Messages for the weekday names."""
