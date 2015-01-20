@@ -102,7 +102,7 @@ class RCalendar(BrowserView):
             'review_state': self.calendar.getCalendarStates(),
             'start': {'query': last_date, 'range': 'max'},
             'end': {'query': first_date, 'range': 'min'},
-            'sort_on': 'start'
+            'sort_on': 'start',
         }
         query_args.update(kw)
 
@@ -358,7 +358,13 @@ class RCalendar(BrowserView):
             # get the dates, taking recurrence into account
             recurs = getattr(result, 'recurs', 'daily')
             start = result.start
-            ldate = min(last_date, result.end.latestTime())
+
+            end = result.end
+            if getattr(end, 'parts', None) is None:
+                end = DateTime(end)
+                start = DateTime(result.start)
+
+            ldate = min(last_date, end.latestTime())
             if recurs == 'weekly':
                 dates = caldate.weekly(first_date, ldate, start)
             elif recurs == 'biweekly':
@@ -370,11 +376,11 @@ class RCalendar(BrowserView):
 
             if dates:
                 if ampm:
-                    st = result.start.AMPMMinutes().lstrip('0')
+                    st = start.AMPMMinutes().lstrip('0')
                 else:
-                    st = result.start.TimeMinutes()
+                    st = start.TimeMinutes()
 
-                time = list(result.start.parts()[3:5])
+                time = list(start.parts()[3:5])
                 # put event in list
                 for day in dates:
                     startdt = DateTime(*(list(day.parts()[0:3]) + time))
@@ -396,6 +402,12 @@ class RCalendar(BrowserView):
 
     def getNextMonthEvents(self, **kwa):
         return self.getNextDaysEvents(30, **kwa)
+
+    def getNext90DaysEvents(self, **kwa):
+        return self.getNextDaysEvents(90, **kwa)
+
+    def getNext180DaysEvents(self, **kwa):
+        return self.getNextDaysEvents(180, **kwa)
 
     def getNextWeekEvents(self, **kwa):
         return self.getNextDaysEvents(6, **kwa)
