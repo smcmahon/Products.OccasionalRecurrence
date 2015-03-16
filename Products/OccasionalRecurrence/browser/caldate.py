@@ -175,22 +175,25 @@ def monthly(start, end, target):
     """
 
     week = target.day() / 7
+    tdow = target.dow()
 
     if target > start:
         monthStart = startOfMonth(stripTime(target))
     else:
         monthStart = startOfMonth(start)
 
+    # import pdb; pdb.set_trace()
+
     res = []
     while monthStart <= end:
-        tdow = target.dow()
         msdow = monthStart.dow()
         if tdow >= msdow:
             ofs = tdow - msdow
         else:
             ofs = 7 - (msdow - tdow)
         date = monthStart + (week * 7 + ofs)
-        if monthStart <= date <= endOfMonth(monthStart):
+        # if monthStart <= date <= endOfMonth(monthStart):
+        if start <= date <= endOfMonth(monthStart):
             res.append(date)
         monthStart = startOfNextMonth(monthStart)
     return res
