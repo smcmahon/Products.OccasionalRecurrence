@@ -342,6 +342,8 @@ class RCalendar(BrowserView):
         first_date = first.earliestTime()
         last_date = last.latestTime()
 
+        force_unique = kwa.get('force_unique', False)
+
         query = catalog(
             portal_type=ctool.getCalendarTypes(),
             review_state=ctool.getCalendarStates(),
@@ -385,6 +387,8 @@ class RCalendar(BrowserView):
                 for day in dates:
                     startdt = DateTime(*(list(day.parts()[0:3]) + time))
                     events.append((startdt, st, result))
+                    if force_unique:
+                        break
 
         # sort without considering result part
         events.sort(
